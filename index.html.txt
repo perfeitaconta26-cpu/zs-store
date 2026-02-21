@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZS Store</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:linear-gradient(135deg,#0d0d0d,#1a1a1a);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.cupomBtn{
+position:absolute;
+top:15px;
+left:20px;
+background:#222;
+color:white;
+border:none;
+padding:8px 15px;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.marca{
+position:absolute;
+top:15px;
+right:20px;
+text-align:right;
+}
+
+.rgb{
+font-weight:bold;
+font-size:14px;
+animation:rgb 3s linear infinite;
+}
+
+@keyframes rgb{
+0%{color:#ff0000;}
+25%{color:#00ff00;}
+50%{color:#00ffff;}
+75%{color:#ff00ff;}
+100%{color:#ff0000;}
+}
+
+.versao{
+font-size:11px;
+opacity:0.6;
+}
+
+.container{
+background:#111;
+width:420px;
+padding:30px;
+border-radius:25px;
+box-shadow:0 0 40px rgba(138,43,226,0.3);
+text-align:center;
+color:white;
+}
+
+.frase{
+font-size:13px;
+opacity:0.6;
+margin-bottom:10px;
+}
+
+.titulo{
+font-size:22px;
+font-weight:bold;
+margin-bottom:25px;
+}
+
+.top-buttons{
+display:flex;
+gap:15px;
+justify-content:center;
+margin-bottom:20px;
+}
+
+.btn{
+border:none;
+padding:12px 20px;
+border-radius:15px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.divino{
+background:#FFD700;
+color:#000;
+}
+
+.infinity{
+background:#8A2BE2;
+color:white;
+box-shadow:0 0 10px #8A2BE2,0 0 20px #8A2BE2;
+}
+
+.lista{
+display:none;
+margin-top:15px;
+max-height:220px;
+overflow-y:auto;
+}
+
+.lista button{
+width:100%;
+margin-bottom:10px;
+padding:12px;
+border:none;
+border-radius:12px;
+background:#1f1f1f;
+color:white;
+cursor:pointer;
+font-weight:bold;
+}
+
+.pixTela{
+display:none;
+margin-top:20px;
+background:#0f0f0f;
+padding:20px;
+border-radius:20px;
+box-shadow:0 0 25px rgba(138,43,226,0.6);
+}
+
+.valor{
+color:#00ffcc;
+font-size:18px;
+margin-bottom:10px;
+}
+
+.pix-chave{
+background:#1c1c1c;
+padding:10px;
+border-radius:10px;
+margin:10px 0;
+}
+
+.copyBtn{
+background:#00c896;
+color:black;
+}
+
+.voltar{
+margin-top:15px;
+background:#444;
+color:white;
+}
+</style>
+</head>
+
+<body>
+
+<button class="cupomBtn">CUPOM</button>
+
+<div class="marca">
+<div class="rgb">ZS | lucas</div>
+<div class="versao">versão 0.11.1</div>
+</div>
+
+<div class="container">
+
+<div class="frase">
+Se custa a sua paz, então é caro demais
+</div>
+
+<div class="titulo">
+Venda De Brainrot do Fuja do tsunami
+</div>
+
+<div class="top-buttons">
+<button class="btn divino" onclick="mostrarDivino()">Divino</button>
+<button class="btn infinity" onclick="mostrarInfinity()">Infinity</button>
+</div>
+
+<div id="divinoLista" class="lista"></div>
+<div id="infinityLista" class="lista"></div>
+
+<div id="pixTela" class="pixTela">
+<div id="itemNome"></div>
+<div class="valor" id="itemValor"></div>
+
+<h3>Chave Pix</h3>
+<div class="pix-chave">56699240889</div>
+
+<button class="btn copyBtn" onclick="copiarPix()">Copiar Chave Pix</button>
+
+<div style="margin-top:10px;">
+mande o valor certo ou não recebera
+</div>
+<div>não aceito devolução</div>
+
+<button class="btn voltar" onclick="voltar()">Voltar</button>
+</div>
+
+</div>
+
+<script>
+const divinoLista=document.getElementById("divinoLista");
+const infinityLista=document.getElementById("infinityLista");
+const pixTela=document.getElementById("pixTela");
+const itemNome=document.getElementById("itemNome");
+const itemValor=document.getElementById("itemValor");
+
+const divinoItems=[
+"Bulbito Bandito Traktorito 30 m/s (R$3,50)",
+"Burgerini Bearini (R$3,50)",
+"Martino Gravitino (R$3,50)",
+"Grappellino D'Oro (R$3,50)",
+"Elefante de Morango (R$3,50)",
+"Din Din Vaultero (R$3,50)",
+"Glacierello Infernetti (R$3,50)",
+"Biscotti Macarotti (R$3,50)",
+"Galáxia Fantasma (R$3,50)",
+"Rubichetto Cubini (R$3,50)",
+"Freezeti Cobretti (R$3,50)",
+"Cupitron Consoletron (R$3,50)"
+];
+
+const infinityItems=[
+"anububu (R$15)",
+"meta technetta (R$25)",
+"nobini infinity (R$40)"
+];
+
+function criarBotao(nome){
+let btn=document.createElement("button");
+btn.innerText=nome;
+btn.onclick=()=>abrirPix(nome);
+return btn;
+}
+
+divinoItems.forEach(i=>divinoLista.appendChild(criarBotao(i)));
+infinityItems.forEach(i=>infinityLista.appendChild(criarBotao(i)));
+
+function mostrarDivino(){
+divinoLista.style.display="block";
+infinityLista.style.display="none";
+pixTela.style.display="none";
+}
+
+function mostrarInfinity(){
+infinityLista.style.display="block";
+divinoLista.style.display="none";
+pixTela.style.display="none";
+}
+
+function abrirPix(nome){
+divinoLista.style.display="none";
+infinityLista.style.display="none";
+pixTela.style.display="block";
+
+itemNome.innerText="Item: "+nome;
+let valor=parseFloat(nome.match(/\d+,\d+|\d+/)[0].replace(",","."));
+itemValor.innerText="Valor: R$"+valor.toFixed(2);
+}
+
+function copiarPix(){
+navigator.clipboard.writeText("56699240889");
+alert("Chave Pix copiada!");
+}
+
+function voltar(){
+pixTela.style.display="none";
+}
+</script>
+
+</body>
+</html>
