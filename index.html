@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Zs-Storage | Loja Oficial</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    background:radial-gradient(circle at top,#111,#050505);
+    color:white;
+    text-align:center;
+    overflow:hidden;
+}
+
+/* ANIMAÇÃO FADE */
+.fade{
+    animation:fade 0.4s ease;
+}
+
+@keyframes fade{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+/* NOME RGB */
+.rgb{
+    font-size:32px;
+    font-weight:900;
+    animation:rgb 6s linear infinite;
+    text-shadow:0 0 20px currentColor;
+}
+
+@keyframes rgb{
+    0%{color:#ff0000;}
+    25%{color:#a020f0;}
+    50%{color:#00ffff;}
+    75%{color:#ff00ff;}
+    100%{color:#ff0000;}
+}
+
+/* CUPOM */
+.cupomBtn{
+    position:absolute;
+    top:20px;
+    right:20px;
+    padding:8px 16px;
+    font-size:12px;
+    background:black;
+    border:2px solid #a020f0;
+    border-radius:20px;
+    color:#a020f0;
+    cursor:pointer;
+    box-shadow:0 0 15px #a020f0;
+    transition:0.3s;
+}
+
+.cupomBtn:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 25px #a020f0;
+}
+
+/* CENTRAL */
+.center{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:90%;
+    max-width:500px;
+}
+
+/* BOTÕES PRINCIPAIS */
+.mainBtn{
+    width:100%;
+    padding:22px;
+    margin:20px 0;
+    font-size:20px;
+    font-weight:bold;
+    border-radius:20px;
+    cursor:pointer;
+    background:#111;
+    color:white;
+    border:2px solid #a020f0;
+    box-shadow:0 0 20px #a020f0;
+    transition:0.3s;
+}
+
+.mainBtn:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 35px #a020f0;
+}
+
+/* BOX */
+.box{
+    margin:40px auto;
+    width:90%;
+    max-width:600px;
+    padding:30px;
+    border-radius:20px;
+    background:#0b0b0b;
+    border:2px solid #a020f0;
+    box-shadow:0 0 30px #a020f0;
+}
+
+/* ITENS */
+.item{
+    width:100%;
+    padding:14px;
+    margin:8px 0;
+    border-radius:14px;
+    background:#111;
+    color:white;
+    border:1px solid #a020f0;
+    box-shadow:0 0 12px #a020f0;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.item:hover{
+    transform:scale(1.03);
+    box-shadow:0 0 22px #a020f0;
+}
+
+/* VOLTAR */
+.back{
+    margin-top:20px;
+    background:black;
+    color:#ff4444;
+    border:2px solid #ff4444;
+    padding:12px 20px;
+    border-radius:18px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.back:hover{
+    box-shadow:0 0 20px #ff4444;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SONS -->
+<audio id="clickSound" src="https://www.myinstants.com/media/sounds/mouse-click.mp3"></audio>
+<audio id="openSound" src="https://www.myinstants.com/media/sounds/anime-wow-sound-effect.mp3"></audio>
+
+<button class="cupomBtn" onclick="tocarClick(); alert('Sistema de cupom em breve')">Cupom</button>
+
+<div class="center fade" id="home">
+<div class="rgb">Zs-Storage</div>
+<p>🔥 Loja Oficial - Versão 3.0 🔥</p>
+
+<button class="mainBtn" onclick="abrirDivino()">DIVINO</button>
+<button class="mainBtn" onclick="abrirInfinity()">INFINITY</button>
+</div>
+
+<div id="divinoArea" style="display:none;">
+<div class="box fade">
+<h2>Divino - R$3,50</h2>
+
+<script>
+const divinos = [
+"Bulbito Bandito Traktorito",
+"Burgerini Bearini",
+"Martino Gravitino",
+"Grappellino D'Oro",
+"Elefante de Morango",
+"Din Din Vaultero",
+"Glacierello Infernetti",
+"Biscotti Macarotti",
+"Galáxia Fantasma",
+"Rubichetto Cubini",
+"Freezeti Cobretti",
+"Cupitron Consoletron"
+];
+
+divinos.forEach(nome=>{
+document.write(`<button class="item" onclick="mostrarItem('${nome}','3,50')">${nome} - R$3,50</button>`);
+});
+</script>
+
+<button class="back" onclick="voltar()">Voltar</button>
+</div>
+</div>
+
+<div id="infinityArea" style="display:none;">
+<div class="box fade">
+<h2>Infinity</h2>
+
+<button class="item" onclick="mostrarItem('Anububu','15')">Anububu - R$15</button>
+<button class="item" onclick="mostrarItem('Meta Technetta','25')">Meta Technetta - R$25</button>
+<button class="item" onclick="mostrarItem('Nobini Infinity','40')">Nobini Infinity - R$40</button>
+
+<button class="back" onclick="voltar()">Voltar</button>
+</div>
+</div>
+
+<div id="itemArea" style="display:none;">
+<div class="box fade">
+<h2 id="itemNome"></h2>
+<p style="font-size:18px;">Valor: <b>R$ <span id="itemPreco"></span></b></p>
+<p><b>PIX:</b> SUA_CHAVE_PIX_AQUI</p>
+<p style="color:#ff4444;">⚠️ Não aceito devolução.</p>
+
+<button class="back" onclick="voltar()">Voltar</button>
+</div>
+</div>
+
+<script>
+function tocarClick(){
+document.getElementById("clickSound").play();
+}
+
+function abrirDivino(){
+tocarClick();
+esconderTudo();
+document.getElementById("divinoArea").style.display="block";
+}
+
+function abrirInfinity(){
+tocarClick();
+esconderTudo();
+document.getElementById("infinityArea").style.display="block";
+}
+
+function mostrarItem(nome,preco){
+document.getElementById("openSound").play();
+esconderTudo();
+document.getElementById("itemNome").innerText = nome;
+document.getElementById("itemPreco").innerText = preco;
+document.getElementById("itemArea").style.display="block";
+}
+
+function voltar(){
+tocarClick();
+esconderTudo();
+document.getElementById("home").style.display="block";
+}
+
+function esconderTudo(){
+document.getElementById("home").style.display="none";
+document.getElementById("divinoArea").style.display="none";
+document.getElementById("infinityArea").style.display="none";
+document.getElementById("itemArea").style.display="none";
+}
+</script>
+
+</body>
+</html>
