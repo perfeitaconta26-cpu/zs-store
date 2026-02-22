@@ -3,230 +3,324 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loja De Fuja Do Tsunami</title>
+<title>ZS | lucas Store</title>
+
 <style>
-  /* Fundo preto e layout responsivo */
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    background-color: #000000;
-    font-family: Arial, sans-serif;
-    color: white;
-    overflow: hidden; /* remove scroll da página inteira */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:black;
+color:white;
+overflow-x:hidden;
+}
 
-  h1 {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font-size: 2em;
-    text-align: center;
-  }
+/* FUNDO ANIMADO */
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:repeating-linear-gradient(
+45deg,
+#001aff 0px,
+#001aff 2px,
+transparent 2px,
+transparent 40px
+);
+animation:moveBg 5s linear infinite;
+opacity:0.15;
+z-index:-1;
+}
+@keyframes moveBg{
+0%{background-position:0 0;}
+100%{background-position:400px 400px;}
+}
 
-  .button-container {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
+/* TOPO */
+.top-info{
+position:fixed;
+top:15px;
+left:20px;
+font-size:14px;
+color:#a020f0;
+font-weight:bold;
+text-shadow:0 0 10px #a020f0;
+z-index:1000;
+}
 
-  button {
-    padding: 12px 30px;
-    font-size: 1em;
-    font-weight: bold;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
-    outline: none;
-  }
+/* PESQUISA */
+.search-bar{
+position:fixed;
+top:15px;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+align-items:center;
+background:black;
+border:2px solid #a020f0;
+border-radius:30px;
+padding:5px 15px;
+z-index:1000;
+}
 
-  #divino { background-color: #D4AF37; color: white; }
-  #infinity { background-color: #800080; color: rgb(255,0,255); }
+.search-bar input{
+background:none;
+border:none;
+outline:none;
+color:white;
+padding:8px;
+width:220px;
+}
 
-  .neon { box-shadow: 0 0 10px #00ffff,0 0 20px #00ffff,0 0 30px #00ffff; border:2px solid #00ffff; }
+.search-bar span{
+color:#a020f0;
+font-size:18px;
+margin-right:5px;
+}
 
-  button:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
+/* CONTAINER */
+.container{
+display:flex;
+flex-direction:column;
+align-items:center;
+margin-top:120px;
+gap:20px;
+}
 
-  /* Abas internas responsivas */
-  .tab {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    width: 90%;
-    max-width: 600px;
-    height: calc(100vh - 120px); /* altura responsiva */
-    margin-bottom: 10px;
-  }
+button{
+background:black;
+border:2px solid #a020f0;
+color:white;
+padding:12px 25px;
+border-radius:20px;
+cursor:pointer;
+transition:0.3s;
+}
 
-  .item-container {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    overflow-y: auto; /* scroll apenas aqui */
-    width: 100%;
-    padding: 5px;
-    flex-grow: 1;
-  }
+button:hover{
+box-shadow:0 0 15px #a020f0;
+}
 
-  .item-container button {
-    width: 100%;
-    text-align: left;
-    background-color: #222;
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 1em;
-  }
+.options{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:15px;
+}
 
-  .item-container button:hover { background-color: #444; }
+/* MODAL */
+.modal-bg{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.85);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:2000;
+}
 
-  .selected-item {
-    background-color: #111;
-    padding: 15px;
-    border-radius: 12px;
-    width: 100%;
-    text-align: center;
-    margin-top: 10px;
-    word-wrap: break-word;
-  }
+.modal-bg.active{
+display:flex;
+}
 
-  .back-button {
-    margin-top: 10px;
-    padding: 10px 25px;
-    font-size: 1em;
-    border-radius: 10px;
-    background-color: #555;
-    color: white;
-    cursor: pointer;
-  }
+.modal{
+background:black;
+border:2px solid #a020f0;
+border-radius:20px;
+padding:30px;
+width:340px;
+text-align:center;
+box-shadow:0 0 20px #a020f0;
+}
 
-  .back-button:hover { background-color: #777; }
-
+.close-btn{
+margin-top:20px;
+background:#a020f0;
+border:none;
+padding:8px 20px;
+border-radius:12px;
+cursor:pointer;
+}
 </style>
 </head>
 <body>
 
-<h1>Loja De Fuja Do Tsunami</h1>
-
-<div class="button-container" id="mainButtons">
-  <button id="divino">Divino</button>
-  <button id="infinity">Infinity</button>
+<div class="top-info">
+ZS | lucas<br>
+Versão 2 . 0 .10
 </div>
 
-<!-- Aba Divino -->
-<div class="tab" id="divinoTab">
-  <div class="item-container" id="divinoItems"></div>
-  <div class="selected-item" id="divinoSelected" style="display:none;"></div>
-  <button class="back-button" onclick="backToMain()">Voltar</button>
+<div class="search-bar">
+<span>🔍</span>
+<input type="text" id="searchInput" placeholder="Pesquisar item...">
 </div>
 
-<!-- Aba Infinity -->
-<div class="tab" id="infinityTab">
-  <div class="item-container" id="infinityItems"></div>
-  <div class="selected-item" id="infinitySelected" style="display:none;"></div>
-  <button class="back-button" onclick="backToMain()">Voltar</button>
+<div class="container">
+<button onclick="showDivinos()">Divino</button>
+<button onclick="showInfinity()">Infinity</button>
+<div class="options" id="optionsContainer"></div>
+</div>
+
+<div class="modal-bg" id="modalBg">
+<div class="modal" id="modalContent"></div>
 </div>
 
 <script>
-const divinoBtn = document.getElementById('divino');
-const infinityBtn = document.getElementById('infinity');
-const mainButtons = document.getElementById('mainButtons');
 
-const divinoTab = document.getElementById('divinoTab');
-const infinityTab = document.getElementById('infinityTab');
-
-const divinoItemsContainer = document.getElementById('divinoItems');
-const infinityItemsContainer = document.getElementById('infinityItems');
-
-const divinoSelected = document.getElementById('divinoSelected');
-const infinitySelected = document.getElementById('infinitySelected');
-
-function backToMain() {
-  divinoTab.style.display = 'none';
-  infinityTab.style.display = 'none';
-  mainButtons.style.display = 'flex';
-  divinoSelected.style.display = 'none';
-  infinitySelected.style.display = 'none';
-}
-
-// Neon ao clicar
-function addNeon(button) {
-  button.classList.add('neon');
-  setTimeout(() => button.classList.remove('neon'), 200);
-}
-
-// Nomes do Divino
-const divinoItems = [
-  'Bulbito Bandito Traktorito',
-  'Burgerini Bearini',
-  'Martino Gravitino',
-  "Grappellino D'Oro",
-  'Strawberry Elephant',
-  'Din Din Vaultero',
-  'Glacierello Infernetti',
-  'Biscotti Macarotti',
-  'Galactio Fantasma',
-  'Rubichetto Cubini',
-  'Freezeti Cobretti',
-  'Cupitron Consoletron'
-];
-
-// Cria itens do Divino
-divinoItems.forEach((itemName) => {
-  const btn = document.createElement('button');
-  btn.textContent = `${itemName} - R$3,50`;
-  btn.onclick = () => {
-    divinoSelected.style.display = 'block';
-    divinoSelected.innerHTML = `
-      <h3>Item: ${itemName}</h3>
-      <p>Valor: R$3,50</p>
-      <p>Chave PIX: 56699240889</p>
-      <p><strong>Aviso: Não aceito devolução</strong></p>
-    `;
-  }
-  divinoItemsContainer.appendChild(btn);
-});
-
-// Cria itens do Infinity
-const infinityItems = [
-  {nome:'anabubu', valor:15},
-  {nome:'meta technetta', valor:25},
-  {nome:'nobini infinity', valor:30}
-];
-
-infinityItems.forEach(item => {
-  const btn = document.createElement('button');
-  btn.textContent = `${item.nome} - R$${item.valor}`;
-  btn.onclick = () => {
-    infinitySelected.style.display = 'block';
-    infinitySelected.innerHTML = `
-      <h3>Item: ${item.nome}</h3>
-      <p>Valor: R$${item.valor}</p>
-      <p>Chave PIX: 56699240889</p>
-      <p><strong>Aviso: Não aceito devolução</strong></p>
-    `;
-  }
-  infinityItemsContainer.appendChild(btn);
-});
-
-// Eventos dos botões principais
-divinoBtn.onclick = () => {
-  addNeon(divinoBtn);
-  mainButtons.style.display = 'none';
-  divinoTab.style.display = 'flex';
+const prices={
+"Divino 1":49.90,"Divino 2":59.90,"Divino 3":79.90,"Divino 4":89.90,
+"Divino 5":99.90,"Divino 6":109.90,"Divino 7":119.90,"Divino 8":129.90,
+"Divino 9":139.90,"Divino 10":149.90,"Divino 11":159.90,"Divino 12":169.90,
+"Divino 13":179.90,"Divino 14":189.90,"Divino 15":199.90,
+"Infinity 1":299.90,"Infinity 2":399.90,"Infinity 3":499.90,"Infinity 4":599.90
 };
 
-infinityBtn.onclick = () => {
-  addNeon(infinityBtn);
-  mainButtons.style.display = 'none';
-  infinityTab.style.display = 'flex';
+const container=document.getElementById("optionsContainer");
+const modalBg=document.getElementById("modalBg");
+const modalContent=document.getElementById("modalContent");
+
+function resetToHome(){
+modalBg.classList.remove("active");
+container.innerHTML="";
+document.getElementById("searchInput").value="";
+}
+
+function openModal(html, autoReturn=false){
+modalContent.innerHTML=html + `<br><button class="close-btn" onclick="resetToHome()">Fechar</button>`;
+modalBg.classList.add("active");
+
+if(autoReturn){
+setTimeout(()=>{ resetToHome(); },120000);
+}
+}
+
+function showDivinos(secret=false){
+container.innerHTML="";
+for(let i=1;i<=15;i++){
+let name="Divino "+i;
+let btn=document.createElement("button");
+btn.textContent=name;
+btn.onclick=()=>{
+if(secret){
+openModal(`
+<h2>${name}</h2>
+<p>Escreve na DM no ZS "gratisdivino" e escolha o divino desejado</p>
+`, true);
+}else{
+openModal(`
+<h2>${name}</h2>
+<p><strong>Preço:</strong> R$ ${prices[name].toFixed(2)}</p>
+<p><strong>PIX:</strong> 56699240889</p>
+<p style="color:red;">Não aceito devolução.</p>
+`, true);
+}
 };
+container.appendChild(btn);
+}
+}
+
+function showInfinity(){
+container.innerHTML="";
+for(let i=1;i<=4;i++){
+let name="Infinity "+i;
+let btn=document.createElement("button");
+btn.textContent=name;
+btn.onclick=()=>{
+openModal(`
+<h2>${name}</h2>
+<p><strong>Preço:</strong> R$ ${prices[name].toFixed(2)}</p>
+<p><strong>PIX:</strong> 56699240889</p>
+<p style="color:red;">Não aceito devolução.</p>
+`, true);
+};
+container.appendChild(btn);
+}
+}
+
+/* PESQUISA */
+
+document.getElementById("searchInput").addEventListener("keyup",function(){
+let value=this.value.toLowerCase();
+
+if(value==="zagobueno"){
+openModal(`
+<h2>Painel Secreto</h2>
+<button onclick="showDivinos(true)">Um divino gratuito</button>
+<br><br>
+<button onclick="desconto()">25% de desconto</button>
+`);
+return;
+}
+
+container.innerHTML="";
+for(let item in prices){
+if(item.toLowerCase().includes(value)){
+let btn=document.createElement("button");
+btn.textContent=item;
+btn.onclick=()=>{
+openModal(`
+<h2>${item}</h2>
+<p><strong>Preço:</strong> R$ ${prices[item].toFixed(2)}</p>
+<p><strong>PIX:</strong> 56699240889</p>
+<p style="color:red;">Não aceito devolução.</p>
+`, true);
+};
+container.appendChild(btn);
+}
+}
+});
+
+function desconto(){
+openModal(`
+<h2>Desconto Especial</h2>
+<p>Fale "25zago" na DM do ZS para ter 25% de desconto</p>
+`, true);
+}
+
+/* BLOQUEIOS */
+
+document.addEventListener("contextmenu", e=>e.preventDefault());
+
+document.addEventListener("keydown", function(e){
+if(
+e.key==="F12" ||
+(e.ctrlKey && e.shiftKey && e.key==="I") ||
+(e.ctrlKey && e.shiftKey && e.key==="J") ||
+(e.ctrlKey && e.key==="U")
+){
+e.preventDefault();
+}
+});
+
+/* DETECTAR CONSOLE */
+
+let warningShown=false;
+
+function detectConsole(){
+const start=new Date().getTime();
+debugger;
+const end=new Date().getTime();
+
+if(end-start>100){
+if(!warningShown){
+warningShown=true;
+const overlay=document.createElement("div");
+overlay.style.position="fixed";
+overlay.style.inset="0";
+overlay.style.background="black";
+overlay.style.color="white";
+overlay.style.display="flex";
+overlay.style.justifyContent="center";
+overlay.style.alignItems="center";
+overlay.style.fontSize="28px";
+overlay.style.zIndex="999999";
+overlay.innerHTML="Reentre no site para continuar vendo";
+document.body.appendChild(overlay);
+}
+}
+}
+
+setInterval(detectConsole,1500);
+
 </script>
 
 </body>
