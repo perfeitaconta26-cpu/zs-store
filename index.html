@@ -11,10 +11,11 @@ margin:0;
 font-family:Arial, sans-serif;
 background:black;
 color:white;
+min-height:100vh;
 overflow-x:hidden;
 }
 
-/* FUNDO ANIMADO */
+/* FUNDO INFINITO CORRIGIDO */
 body::before{
 content:"";
 position:fixed;
@@ -26,13 +27,61 @@ background:repeating-linear-gradient(
 transparent 2px,
 transparent 40px
 );
-animation:moveBg 5s linear infinite;
+animation:moveBg 6s linear infinite;
 opacity:0.15;
 z-index:-1;
 }
+
 @keyframes moveBg{
 0%{background-position:0 0;}
 100%{background-position:400px 400px;}
+}
+
+/* GLITCH */
+.glitch{
+position:relative;
+color:#a020f0;
+font-weight:bold;
+text-shadow:0 0 10px #a020f0;
+animation:glitch 1s infinite;
+}
+
+.glitch::before,
+.glitch::after{
+content:attr(data-text);
+position:absolute;
+left:0;
+width:100%;
+}
+
+.glitch::before{
+color:#00ffff;
+animation:glitchTop 1s infinite;
+}
+
+.glitch::after{
+color:#ff00ff;
+animation:glitchBottom 1s infinite;
+}
+
+@keyframes glitch{
+0%,100%{transform:translate(0);}
+20%{transform:translate(-1px,1px);}
+40%{transform:translate(-1px,-1px);}
+60%{transform:translate(1px,1px);}
+80%{transform:translate(1px,-1px);}
+}
+
+@keyframes glitchTop{
+0%{clip-path:inset(0 0 50% 0);}
+50%{clip-path:inset(15% 0 35% 0);}
+100%{clip-path:inset(0 0 50% 0);}
+}
+
+@keyframes glitchBottom{
+0%{clip-path:inset(50% 0 0 0);}
+50%{clip-path:inset(35% 0 15% 0);}
+100%{clip-path:inset(50% 0 0 0);}
 }
 
 /* TOPO */
@@ -40,10 +89,6 @@ z-index:-1;
 position:fixed;
 top:15px;
 left:20px;
-font-size:14px;
-color:#a020f0;
-font-weight:bold;
-text-shadow:0 0 10px #a020f0;
 z-index:1000;
 }
 
@@ -71,12 +116,6 @@ padding:8px;
 width:220px;
 }
 
-.search-bar span{
-color:#a020f0;
-font-size:18px;
-margin-right:5px;
-}
-
 /* CONTAINER */
 .container{
 display:flex;
@@ -86,6 +125,7 @@ margin-top:120px;
 gap:20px;
 }
 
+/* BOTÕES */
 button{
 background:black;
 border:2px solid #a020f0;
@@ -100,6 +140,7 @@ button:hover{
 box-shadow:0 0 15px #a020f0;
 }
 
+/* LISTA */
 .options{
 display:flex;
 flex-wrap:wrap;
@@ -107,11 +148,33 @@ justify-content:center;
 gap:15px;
 }
 
+/* PREÇOS */
+.price-box{
+margin-top:8px;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:4px;
+}
+
+.old-price{
+color:#777;
+text-decoration:line-through;
+font-size:13px;
+}
+
+.new-price{
+color:#00ff88;
+font-weight:bold;
+font-size:16px;
+text-shadow:0 0 8px #00ff88;
+}
+
 /* MODAL */
 .modal-bg{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,0.85);
+background:rgba(0,0,0,0.9);
 display:none;
 justify-content:center;
 align-items:center;
@@ -145,12 +208,12 @@ cursor:pointer;
 <body>
 
 <div class="top-info">
-ZS | lucas<br>
-Versão 2 . 0 .10
+<div class="glitch" data-text="ZS | lucas">ZS | lucas</div>
+<div>Versão 2 . 0 .10</div>
 </div>
 
 <div class="search-bar">
-<span>🔍</span>
+<span style="color:#a020f0;">🔍</span>
 <input type="text" id="searchInput" placeholder="Pesquisar item...">
 </div>
 
@@ -166,13 +229,31 @@ Versão 2 . 0 .10
 
 <script>
 
-const prices={
-"Divino 1":49.90,"Divino 2":59.90,"Divino 3":79.90,"Divino 4":89.90,
-"Divino 5":99.90,"Divino 6":109.90,"Divino 7":119.90,"Divino 8":129.90,
-"Divino 9":139.90,"Divino 10":149.90,"Divino 11":159.90,"Divino 12":169.90,
-"Divino 13":179.90,"Divino 14":189.90,"Divino 15":199.90,
-"Infinity 1":299.90,"Infinity 2":399.90,"Infinity 3":499.90,"Infinity 4":599.90
-};
+const divinos=[
+"Bulbito Bandito Traktorito",
+"Burgerini Bearini",
+"Martino Gravitino",
+"Grappellino D'Oro",
+"Elefante de Morango",
+"Din Din Vaultero",
+"Glacierello Infernetti",
+"Biscotti Macarotti",
+"Galáxia Fantasma",
+"Rubichetto Cubini",
+"Freezeti Cobretti",
+"Cupitron Consoletron",
+"Divino 13",
+"Divino 14",
+"Divino 15"
+];
+
+const infinity=["anububu","meta technetta","Noobini Infeeny","Infinity 4"];
+
+const prices={};
+const divinoPrices=[2,2.5,3.5,3.5,4,4,4,4.5,4.5,5,5,6,7,7,7];
+
+divinos.forEach((item,i)=>prices[item]=divinoPrices[i]);
+infinity.forEach((item,i)=>prices[item]=20+(i*5));
 
 const container=document.getElementById("optionsContainer");
 const modalBg=document.getElementById("modalBg");
@@ -184,66 +265,63 @@ container.innerHTML="";
 document.getElementById("searchInput").value="";
 }
 
-function openModal(html, autoReturn=false){
-modalContent.innerHTML=html + `<br><button class="close-btn" onclick="resetToHome()">Fechar</button>`;
+function openModal(html,autoReturn=false){
+modalContent.innerHTML=html+`<br><button class="close-btn" onclick="resetToHome()">Fechar</button>`;
 modalBg.classList.add("active");
-
-if(autoReturn){
-setTimeout(()=>{ resetToHome(); },120000);
+if(autoReturn){setTimeout(resetToHome,120000);}
 }
+
+function renderItem(name,secret=false){
+let original=(prices[name]+2).toFixed(2);
+let newPrice=prices[name].toFixed(2);
+
+if(secret){
+openModal(`
+<h2 class="glitch" data-text="${name}">${name}</h2>
+<p>Escreve na DM no ZS "gratisdivino" e escolha o divino desejado</p>
+`,true);
+return;
+}
+
+openModal(`
+<h2 class="glitch" data-text="${name}">${name}</h2>
+<div class="price-box">
+<div class="old-price">R$ ${original}</div>
+<div class="new-price">R$ ${newPrice}</div>
+</div>
+<p><strong>PIX:</strong> 56699240889</p>
+<p style="color:red;">Não aceito devolução.</p>
+`,true);
 }
 
 function showDivinos(secret=false){
+modalBg.classList.remove("active"); // 🔥 CORREÇÃO
 container.innerHTML="";
-for(let i=1;i<=15;i++){
-let name="Divino "+i;
+divinos.forEach(name=>{
 let btn=document.createElement("button");
 btn.textContent=name;
-btn.onclick=()=>{
-if(secret){
-openModal(`
-<h2>${name}</h2>
-<p>Escreve na DM no ZS "gratisdivino" e escolha o divino desejado</p>
-`, true);
-}else{
-openModal(`
-<h2>${name}</h2>
-<p><strong>Preço:</strong> R$ ${prices[name].toFixed(2)}</p>
-<p><strong>PIX:</strong> 56699240889</p>
-<p style="color:red;">Não aceito devolução.</p>
-`, true);
-}
-};
+btn.onclick=()=>renderItem(name,secret);
 container.appendChild(btn);
-}
+});
 }
 
 function showInfinity(){
+modalBg.classList.remove("active");
 container.innerHTML="";
-for(let i=1;i<=4;i++){
-let name="Infinity "+i;
+infinity.forEach(name=>{
 let btn=document.createElement("button");
 btn.textContent=name;
-btn.onclick=()=>{
-openModal(`
-<h2>${name}</h2>
-<p><strong>Preço:</strong> R$ ${prices[name].toFixed(2)}</p>
-<p><strong>PIX:</strong> 56699240889</p>
-<p style="color:red;">Não aceito devolução.</p>
-`, true);
-};
+btn.onclick=()=>renderItem(name);
 container.appendChild(btn);
+});
 }
-}
-
-/* PESQUISA */
 
 document.getElementById("searchInput").addEventListener("keyup",function(){
 let value=this.value.toLowerCase();
 
 if(value==="zagobueno"){
 openModal(`
-<h2>Painel Secreto</h2>
+<h2 class="glitch" data-text="Painel Secreto">Painel Secreto</h2>
 <button onclick="showDivinos(true)">Um divino gratuito</button>
 <br><br>
 <button onclick="desconto()">25% de desconto</button>
@@ -252,74 +330,22 @@ return;
 }
 
 container.innerHTML="";
-for(let item in prices){
+Object.keys(prices).forEach(item=>{
 if(item.toLowerCase().includes(value)){
 let btn=document.createElement("button");
 btn.textContent=item;
-btn.onclick=()=>{
-openModal(`
-<h2>${item}</h2>
-<p><strong>Preço:</strong> R$ ${prices[item].toFixed(2)}</p>
-<p><strong>PIX:</strong> 56699240889</p>
-<p style="color:red;">Não aceito devolução.</p>
-`, true);
-};
+btn.onclick=()=>renderItem(item);
 container.appendChild(btn);
 }
-}
+});
 });
 
 function desconto(){
 openModal(`
-<h2>Desconto Especial</h2>
+<h2 class="glitch" data-text="Desconto Especial">Desconto Especial</h2>
 <p>Fale "25zago" na DM do ZS para ter 25% de desconto</p>
-`, true);
+`,true);
 }
-
-/* BLOQUEIOS */
-
-document.addEventListener("contextmenu", e=>e.preventDefault());
-
-document.addEventListener("keydown", function(e){
-if(
-e.key==="F12" ||
-(e.ctrlKey && e.shiftKey && e.key==="I") ||
-(e.ctrlKey && e.shiftKey && e.key==="J") ||
-(e.ctrlKey && e.key==="U")
-){
-e.preventDefault();
-}
-});
-
-/* DETECTAR CONSOLE */
-
-let warningShown=false;
-
-function detectConsole(){
-const start=new Date().getTime();
-debugger;
-const end=new Date().getTime();
-
-if(end-start>100){
-if(!warningShown){
-warningShown=true;
-const overlay=document.createElement("div");
-overlay.style.position="fixed";
-overlay.style.inset="0";
-overlay.style.background="black";
-overlay.style.color="white";
-overlay.style.display="flex";
-overlay.style.justifyContent="center";
-overlay.style.alignItems="center";
-overlay.style.fontSize="28px";
-overlay.style.zIndex="999999";
-overlay.innerHTML="Reentre no site para continuar vendo";
-document.body.appendChild(overlay);
-}
-}
-}
-
-setInterval(detectConsole,1500);
 
 </script>
 
