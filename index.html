@@ -1,354 +1,368 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZS | lucas Store</title>
 
-<!-- FAVICON ANIMADO HACKER -->
 <link rel="icon" type="image/gif" href="favicon.gif">
-<link rel="shortcut icon" type="image/gif" href="favicon.gif">
 
 <style>
+
 body{
 margin:0;
-font-family:Arial, sans-serif;
+font-family:Arial, Helvetica, sans-serif;
 background:black;
 color:white;
-min-height:100vh;
 overflow-x:hidden;
 }
 
-/* FUNDO INFINITO */
+/* FUNDO LISTRAS */
 body::before{
 content:"";
 position:fixed;
-inset:0;
-background:repeating-linear-gradient(
+width:100%;
+height:100%;
+background: repeating-linear-gradient(
 45deg,
-#001aff 0px,
-#001aff 2px,
+rgba(0,0,255,0.05),
+rgba(0,0,255,0.05) 2px,
 transparent 2px,
-transparent 40px
+transparent 20px
 );
-animation:moveBg 6s linear infinite;
-opacity:0.15;
+animation:moveBg 10s linear infinite;
 z-index:-1;
 }
 
 @keyframes moveBg{
-0%{background-position:0 0;}
-100%{background-position:400px 400px;}
+from{background-position:0 0;}
+to{background-position:400px 400px;}
 }
 
-/* GLITCH */
-.glitch{
-position:relative;
-color:#a020f0;
+/* HEADER */
+header{
+text-align:center;
+padding:20px;
+font-size:30px;
 font-weight:bold;
-text-shadow:0 0 10px #a020f0;
+color:#a100ff;
+text-shadow:0 0 10px #a100ff;
 animation:glitch 1s infinite;
 }
 
-.glitch::before,
-.glitch::after{
-content:attr(data-text);
-position:absolute;
-left:0;
-width:100%;
-}
-
-.glitch::before{
-color:#00ffff;
-animation:glitchTop 1s infinite;
-}
-
-.glitch::after{
-color:#ff00ff;
-animation:glitchBottom 1s infinite;
-}
-
 @keyframes glitch{
-0%,100%{transform:translate(0);}
-20%{transform:translate(-1px,1px);}
-40%{transform:translate(-1px,-1px);}
-60%{transform:translate(1px,1px);}
-80%{transform:translate(1px,-1px);}
+0%{text-shadow:2px 0 red,-2px 0 cyan;}
+50%{text-shadow:-2px 0 red,2px 0 cyan;}
+100%{text-shadow:2px 0 red,-2px 0 cyan;}
 }
 
-@keyframes glitchTop{
-0%{clip-path:inset(0 0 50% 0);}
-50%{clip-path:inset(15% 0 35% 0);}
-100%{clip-path:inset(0 0 50% 0);}
-}
-
-@keyframes glitchBottom{
-0%{clip-path:inset(50% 0 0 0);}
-50%{clip-path:inset(35% 0 15% 0);}
-100%{clip-path:inset(50% 0 0 0);}
-}
-
-/* TOPO */
-.top-info{
-position:fixed;
-top:15px;
-left:20px;
-z-index:1000;
-}
-
-/* PESQUISA */
-.search-bar{
-position:fixed;
-top:15px;
-left:50%;
-transform:translateX(-50%);
+/* STATUS */
+.status-bar{
 display:flex;
-align-items:center;
-background:black;
-border:2px solid #a020f0;
-border-radius:30px;
-padding:5px 15px;
-z-index:1000;
+justify-content:space-between;
+padding:10px 30px;
+border-bottom:2px solid #a100ff;
+font-size:14px;
 }
 
-.search-bar input{
-background:none;
-border:none;
-outline:none;
-color:white;
-padding:8px;
-width:220px;
-}
-
-/* CONTAINER */
-.container{
-display:flex;
-flex-direction:column;
-align-items:center;
-margin-top:120px;
-gap:20px;
-}
+#onlineCount{color:#00ff88;}
+#salesToday{color:#ff4500;}
 
 /* BOTÕES */
-button{
+.btn{
+padding:10px 20px;
+margin:5px;
 background:black;
-border:2px solid #a020f0;
-color:white;
-padding:12px 25px;
+border:2px solid #a100ff;
+color:#a100ff;
 border-radius:20px;
 cursor:pointer;
-transition:0.3s;
 }
 
-button:hover{
-box-shadow:0 0 15px #a020f0;
+.btn:hover{
+background:#a100ff;
+color:black;
+box-shadow:0 0 15px #a100ff;
 }
 
 /* LISTA */
-.options{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:15px;
+.section{
+padding:20px;
+}
+
+.item{
+margin:10px 0;
+padding:10px;
+border:2px solid #a100ff;
+border-radius:20px;
+}
+
+/* RGB ANIMADO */
+.rgb{
+animation:rgb 3s infinite;
+}
+
+@keyframes rgb{
+0%{color:red;}
+33%{color:lime;}
+66%{color:cyan;}
+100%{color:red;}
 }
 
 /* PREÇOS */
-.price-box{
-margin-top:8px;
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:4px;
-}
-
 .old-price{
-color:#777;
 text-decoration:line-through;
-font-size:13px;
+color:red;
+margin-right:10px;
 }
 
 .new-price{
-color:#00ff88;
+color:#00ff00;
 font-weight:bold;
-font-size:16px;
-text-shadow:0 0 8px #00ff88;
 }
 
-/* MODAL */
-.modal-bg{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.9);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:2000;
-}
-
-.modal-bg.active{
-display:flex;
-}
-
-.modal{
-background:black;
-border:2px solid #a020f0;
-border-radius:20px;
-padding:30px;
-width:340px;
+/* SEARCH */
+.search-box{
 text-align:center;
-box-shadow:0 0 20px #a020f0;
+margin:20px;
 }
 
-.close-btn{
-margin-top:20px;
-background:#a020f0;
-border:none;
-padding:8px 20px;
-border-radius:12px;
-cursor:pointer;
+.search-box input{
+width:250px;
+padding:10px;
+border-radius:20px;
+border:2px solid #a100ff;
+background:black;
+color:white;
+text-align:center;
 }
+
+/* FULL PAGES */
+.full-page{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+z-index:999;
+}
+
+.full-box{
+border:2px solid #a100ff;
+padding:30px;
+border-radius:20px;
+text-align:center;
+}
+
+/* FOOTER */
+.footer{
+text-align:center;
+padding:20px;
+border-top:2px solid #a100ff;
+}
+
+.footer a{
+color:#a100ff;
+margin:0 10px;
+text-decoration:none;
+}
+
+.footer a:hover{
+color:cyan;
+}
+
+.security-warning{
+text-align:center;
+padding:15px;
+color:#ff4d4d;
+font-weight:bold;
+}
+
 </style>
 </head>
+
 <body>
 
-<div class="top-info">
-<div class="glitch" data-text="ZS | lucas">ZS | lucas</div>
-<div>Versão 2 . 0 .10</div>
+<header>ZS | lucas</header>
+
+<div class="status-bar">
+<span id="onlineCount">🟢 0 pessoas online agora</span>
+<span id="salesToday">🔥 0 compras feitas hoje</span>
 </div>
 
-<div class="search-bar">
-<span style="color:#a020f0;">🔍</span>
-<input type="text" id="searchInput" placeholder="Pesquisar item...">
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="🔍 Pesquisar item..." onkeyup="searchItem()">
 </div>
 
-<div class="container">
-<button onclick="showDivinos()">Divino</button>
-<button onclick="showInfinity()">Infinity</button>
-<div class="options" id="optionsContainer"></div>
+<div class="section">
+<h2>💎 Divinos</h2>
+
+<div class="item rgb">Bulbito Bandito Traktorito 
+<span class="old-price">R$3.00</span>
+<span class="new-price">R$2.00</span>
 </div>
 
-<div class="modal-bg" id="modalBg">
-<div class="modal" id="modalContent"></div>
+<div class="item rgb">Burgerini Bearini 
+<span class="old-price">R$3.50</span>
+<span class="new-price">R$2.50</span>
+</div>
+
+<div class="item rgb">Martino Gravitino 
+<span class="old-price">R$4.00</span>
+<span class="new-price">R$3.50</span>
+</div>
+
+<div class="item rgb">Grappellino D'Oro 
+<span class="old-price">R$4.00</span>
+<span class="new-price">R$3.50</span>
+</div>
+
+<div class="item rgb">Elefante de Morango 
+<span class="old-price">R$5.00</span>
+<span class="new-price">R$4.00</span>
+</div>
+
+<div class="item rgb">Din Din Vaultero 
+<span class="old-price">R$5.00</span>
+<span class="new-price">R$4.00</span>
+</div>
+
+<div class="item rgb">Glacierello Infernetti 
+<span class="old-price">R$5.50</span>
+<span class="new-price">R$4.00</span>
+</div>
+
+<div class="item rgb">Biscotti Macarotti 
+<span class="old-price">R$6.00</span>
+<span class="new-price">R$4.50</span>
+</div>
+
+<div class="item rgb">Galáxia Fantasma 
+<span class="old-price">R$6.00</span>
+<span class="new-price">R$4.50</span>
+</div>
+
+<div class="item rgb">Rubichetto Cubini 
+<span class="old-price">R$6.50</span>
+<span class="new-price">R$5.00</span>
+</div>
+
+<div class="item rgb">Freezeti Cobretti 
+<span class="old-price">R$6.50</span>
+<span class="new-price">R$5.00</span>
+</div>
+
+<div class="item rgb">Cupitron Consoletron 
+<span class="old-price">R$7.00</span>
+<span class="new-price">R$6.00</span>
+</div>
+
+<h2>🔥 Infinity</h2>
+
+<div class="item rgb">anububu</div>
+<div class="item rgb">meta technetta</div>
+<div class="item rgb">Noobini Infeeny</div>
+
+<button class="btn" onclick="openPix()">Pagar com Pix</button>
+
+</div>
+
+<!-- PIX -->
+<div class="full-page" id="pixPage">
+<div class="full-box">
+<h2>Pagamento via Pix</h2>
+<p>Chave Pix: 566992408</p>
+<button class="btn" onclick="closePage('pixPage')">Fechar</button>
+</div>
+</div>
+
+<div class="security-warning">
+⚠️ Nunca pedimos sua senha ou código de verificação.
+</div>
+
+<div class="footer">
+<a href="#" onclick="openPage('termsPage')">Termos</a>
+<a href="#" onclick="openPage('policyPage')">Política de Entrega</a>
+<a href="#" onclick="openPage('refundPage')">Reembolso</a>
+<br><br>
+<a href="https://www.tiktok.com/@lucascpastor" target="_blank">
+TikTok: @lucascpastor
+</a>
+</div>
+
+<!-- TERMOS -->
+<div class="full-page" id="termsPage">
+<div class="full-box">
+<h2>Termos de Serviço</h2>
+<p>Ao comprar você concorda com entrega via DM.</p>
+<button class="btn" onclick="closePage('termsPage')">Fechar</button>
+</div>
+</div>
+
+<!-- POLITICA -->
+<div class="full-page" id="policyPage">
+<div class="full-box">
+<h2>Política de Entrega</h2>
+<p>Entrega realizada após confirmação de pagamento.</p>
+<button class="btn" onclick="closePage('policyPage')">Fechar</button>
+</div>
+</div>
+
+<!-- REEMBOLSO -->
+<div class="full-page" id="refundPage">
+<div class="full-box">
+<h2>Reembolso</h2>
+<p>Não há reembolso após entrega do item.</p>
+<button class="btn" onclick="closePage('refundPage')">Fechar</button>
+</div>
 </div>
 
 <script>
-const divinos=[
-"Bulbito Bandito Traktorito",
-"Burgerini Bearini",
-"Martino Gravitino",
-"Grappellino D'Oro",
-"Elefante de Morango",
-"Din Din Vaultero",
-"Glacierello Infernetti",
-"Biscotti Macarotti",
-"Galáxia Fantasma",
-"Rubichetto Cubini",
-"Freezeti Cobretti",
-"Cupitron Consoletron",
-"Divino 13",
-"Divino 14",
-"Divino 15"
-];
 
-const infinity=["anububu","meta technetta","Noobini Infeeny","Infinity 4"];
+/* SEARCH */
+function searchItem(){
+let input=document.getElementById("searchInput").value.toLowerCase();
+let items=document.getElementsByClassName("item");
 
-const prices={};
-const divinoPrices=[2,2.5,3.5,3.5,4,4,4,4.5,4.5,5,5,6,7,7,7];
-
-divinos.forEach((item,i)=>prices[item]=divinoPrices[i]);
-infinity.forEach((item,i)=>prices[item]=20+(i*5));
-
-const container=document.getElementById("optionsContainer");
-const modalBg=document.getElementById("modalBg");
-const modalContent=document.getElementById("modalContent");
-
-function resetToHome(){
-modalBg.classList.remove("active");
-container.innerHTML="";
-document.getElementById("searchInput").value="";
+for(let i=0;i<items.length;i++){
+let txt=items[i].innerText.toLowerCase();
+items[i].style.display=txt.includes(input)?"block":"none";
+}
 }
 
-function openModal(html,autoReturn=false){
-modalContent.innerHTML=html+`<br><button class="close-btn" onclick="resetToHome()">Fechar</button>`;
-modalBg.classList.add("active");
-if(autoReturn){setTimeout(resetToHome,120000);}
+/* STATUS */
+function updateOnline(){
+let online=Math.floor(Math.random()*15)+5;
+document.getElementById("onlineCount").innerText=
+"🟢 "+online+" pessoas online agora";
+}
+let sales=Math.floor(Math.random()*5)+1;
+function updateSales(){
+sales+=Math.random()>0.7?1:0;
+document.getElementById("salesToday").innerText=
+"🔥 "+sales+" compras feitas hoje";
+}
+updateOnline();
+updateSales();
+setInterval(updateOnline,15000);
+setInterval(updateSales,20000);
+
+/* PAGINAS */
+function openPix(){
+document.getElementById("pixPage").style.display="flex";
+}
+function openPage(id){
+document.getElementById(id).style.display="flex";
+}
+function closePage(id){
+document.getElementById(id).style.display="none";
 }
 
-function renderItem(name,secret=false){
-let original=(prices[name]+2).toFixed(2);
-let newPrice=prices[name].toFixed(2);
-
-if(secret){
-openModal(`
-<h2 class="glitch" data-text="${name}">${name}</h2>
-<p>Escreve na DM no ZS "gratisdivino" e escolha o divino desejado</p>
-`,true);
-return;
-}
-
-openModal(`
-<h2 class="glitch" data-text="${name}">${name}</h2>
-<div class="price-box">
-<div class="old-price">R$ ${original}</div>
-<div class="new-price">R$ ${newPrice}</div>
-</div>
-<p><strong>PIX:</strong> 56699240889</p>
-<p style="color:red;">Não aceito devolução.</p>
-`,true);
-}
-
-function showDivinos(secret=false){
-modalBg.classList.remove("active");
-container.innerHTML="";
-divinos.forEach(name=>{
-let btn=document.createElement("button");
-btn.textContent=name;
-btn.onclick=()=>renderItem(name,secret);
-container.appendChild(btn);
-});
-}
-
-function showInfinity(){
-modalBg.classList.remove("active");
-container.innerHTML="";
-infinity.forEach(name=>{
-let btn=document.createElement("button");
-btn.textContent=name;
-btn.onclick=()=>renderItem(name);
-container.appendChild(btn);
-});
-}
-
-document.getElementById("searchInput").addEventListener("keyup",function(){
-let value=this.value.toLowerCase();
-
-if(value==="zagobueno"){
-openModal(`
-<h2 class="glitch" data-text="Painel Secreto">Painel Secreto</h2>
-<button onclick="showDivinos(true)">Um divino gratuito</button>
-<br><br>
-<button onclick="desconto()">25% de desconto</button>
-`);
-return;
-}
-
-container.innerHTML="";
-Object.keys(prices).forEach(item=>{
-if(item.toLowerCase().includes(value)){
-let btn=document.createElement("button");
-btn.textContent=item;
-btn.onclick=()=>renderItem(item);
-container.appendChild(btn);
-}
-});
-});
-
-function desconto(){
-openModal(`
-<h2 class="glitch" data-text="Desconto Especial">Desconto Especial</h2>
-<p>Fale "25zago" na DM do ZS para ter 25% de desconto</p>
-`,true);
-}
 </script>
 
 </body>
