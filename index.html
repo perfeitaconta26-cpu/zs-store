@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZS | lucas Store</title>
 
+<!-- FAVICON ANIMADO HACKER -->
+<link rel="icon" type="image/gif" href="favicon.gif">
+<link rel="shortcut icon" type="image/gif" href="favicon.gif">
+
 <style>
 body{
 margin:0;
@@ -15,7 +19,7 @@ min-height:100vh;
 overflow-x:hidden;
 }
 
-/* FUNDO INFINITO CORRIGIDO */
+/* FUNDO INFINITO */
 body::before{
 content:"";
 position:fixed;
@@ -228,7 +232,6 @@ cursor:pointer;
 </div>
 
 <script>
-
 const divinos=[
 "Bulbito Bandito Traktorito",
 "Burgerini Bearini",
@@ -295,7 +298,7 @@ openModal(`
 }
 
 function showDivinos(secret=false){
-modalBg.classList.remove("active"); // 🔥 CORREÇÃO
+modalBg.classList.remove("active");
 container.innerHTML="";
 divinos.forEach(name=>{
 let btn=document.createElement("button");
@@ -346,7 +349,6 @@ openModal(`
 <p>Fale "25zago" na DM do ZS para ter 25% de desconto</p>
 `,true);
 }
-
 </script>
 
 </body>
