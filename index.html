@@ -1,368 +1,280 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZS | lucas Store</title>
-
+<title>Brainrot Store</title>
 <link rel="icon" type="image/gif" href="favicon.gif">
 
 <style>
-
 body{
-margin:0;
-font-family:Arial, Helvetica, sans-serif;
-background:black;
-color:white;
-overflow-x:hidden;
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    color:white;
+    overflow-x:hidden;
+    background:linear-gradient(270deg, #000000, #0d001a, #001133, #000000);
+    background-size:800% 800%;
+    animation:bgMove 15s ease infinite;
 }
 
-/* FUNDO LISTRAS */
-body::before{
-content:"";
-position:fixed;
-width:100%;
-height:100%;
-background: repeating-linear-gradient(
-45deg,
-rgba(0,0,255,0.05),
-rgba(0,0,255,0.05) 2px,
-transparent 2px,
-transparent 20px
-);
-animation:moveBg 10s linear infinite;
-z-index:-1;
+@keyframes bgMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
 }
 
-@keyframes moveBg{
-from{background-position:0 0;}
-to{background-position:400px 400px;}
-}
-
-/* HEADER */
 header{
-text-align:center;
-padding:20px;
-font-size:30px;
-font-weight:bold;
-color:#a100ff;
-text-shadow:0 0 10px #a100ff;
-animation:glitch 1s infinite;
+    text-align:center;
+    padding:20px;
+    font-size:28px;
+    color:orange;
+    text-shadow:0 0 10px orange;
 }
 
-@keyframes glitch{
-0%{text-shadow:2px 0 red,-2px 0 cyan;}
-50%{text-shadow:-2px 0 red,2px 0 cyan;}
-100%{text-shadow:2px 0 red,-2px 0 cyan;}
+.sales{
+    text-align:center;
+    color:#00ff66;
+    font-size:18px;
+    margin-bottom:10px;
 }
 
-/* STATUS */
-.status-bar{
-display:flex;
-justify-content:space-between;
-padding:10px 30px;
-border-bottom:2px solid #a100ff;
-font-size:14px;
+.tiktok{
+    display:block;
+    text-align:center;
+    margin-bottom:15px;
 }
 
-#onlineCount{color:#00ff88;}
-#salesToday{color:#ff4500;}
-
-/* BOTÕES */
-.btn{
-padding:10px 20px;
-margin:5px;
-background:black;
-border:2px solid #a100ff;
-color:#a100ff;
-border-radius:20px;
-cursor:pointer;
+.tiktok a{
+    color:#00ffff;
+    text-decoration:none;
+    font-weight:bold;
+    border:2px solid #00ffff;
+    padding:8px 15px;
+    border-radius:20px;
+    transition:0.3s;
 }
 
-.btn:hover{
-background:#a100ff;
-color:black;
-box-shadow:0 0 15px #a100ff;
+.tiktok a:hover{
+    background:#00ffff;
+    color:black;
 }
 
-/* LISTA */
+.menu{
+    text-align:center;
+    margin-bottom:10px;
+}
+
+button{
+    background:black;
+    border:2px solid purple;
+    color:white;
+    padding:8px 18px;
+    border-radius:15px;
+    cursor:pointer;
+    margin:5px;
+}
+
+button:hover{
+    background:purple;
+}
+
+#search{
+    display:block;
+    margin:10px auto;
+    padding:8px;
+    width:80%;
+    max-width:400px;
+    border-radius:10px;
+    border:2px solid purple;
+    background:black;
+    color:white;
+}
+
 .section{
-padding:20px;
+    padding:20px;
+    max-width:800px;
+    margin:auto;
 }
 
 .item{
-margin:10px 0;
-padding:10px;
-border:2px solid #a100ff;
-border-radius:20px;
+    border:2px solid purple;
+    border-radius:20px;
+    padding:15px;
+    margin:10px 0;
+    cursor:pointer;
+    transition:0.3s;
+    background:rgba(0,0,0,0.6);
 }
 
-/* RGB ANIMADO */
-.rgb{
-animation:rgb 3s infinite;
+.item:hover{
+    transform:scale(1.02);
+    box-shadow:0 0 20px purple;
 }
 
-@keyframes rgb{
-0%{color:red;}
-33%{color:lime;}
-66%{color:cyan;}
-100%{color:red;}
+.old{
+    text-decoration:line-through;
+    color:red;
+    margin-right:10px;
 }
 
-/* PREÇOS */
-.old-price{
-text-decoration:line-through;
-color:red;
-margin-right:10px;
+.new{
+    color:#00ff66;
+    font-weight:bold;
 }
 
-.new-price{
-color:#00ff00;
-font-weight:bold;
+#popup{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.95);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:999;
 }
 
-/* SEARCH */
-.search-box{
-text-align:center;
-margin:20px;
+#popupBox{
+    background:black;
+    border:3px solid purple;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    width:320px;
+    box-shadow:0 0 30px purple;
 }
-
-.search-box input{
-width:250px;
-padding:10px;
-border-radius:20px;
-border:2px solid #a100ff;
-background:black;
-color:white;
-text-align:center;
-}
-
-/* FULL PAGES */
-.full-page{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:black;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-z-index:999;
-}
-
-.full-box{
-border:2px solid #a100ff;
-padding:30px;
-border-radius:20px;
-text-align:center;
-}
-
-/* FOOTER */
-.footer{
-text-align:center;
-padding:20px;
-border-top:2px solid #a100ff;
-}
-
-.footer a{
-color:#a100ff;
-margin:0 10px;
-text-decoration:none;
-}
-
-.footer a:hover{
-color:cyan;
-}
-
-.security-warning{
-text-align:center;
-padding:15px;
-color:#ff4d4d;
-font-weight:bold;
-}
-
 </style>
 </head>
 
 <body>
 
-<header>ZS | lucas</header>
+<header>💎 Brainrot Store 💎</header>
 
-<div class="status-bar">
-<span id="onlineCount">🟢 0 pessoas online agora</span>
-<span id="salesToday">🔥 0 compras feitas hoje</span>
+<div class="sales">
+🔥 <span id="salesCount"></span> vendas realizadas hoje
 </div>
 
-<div class="search-box">
-<input type="text" id="searchInput" placeholder="🔍 Pesquisar item..." onkeyup="searchItem()">
-</div>
-
-<div class="section">
-<h2>💎 Divinos</h2>
-
-<div class="item rgb">Bulbito Bandito Traktorito 
-<span class="old-price">R$3.00</span>
-<span class="new-price">R$2.00</span>
-</div>
-
-<div class="item rgb">Burgerini Bearini 
-<span class="old-price">R$3.50</span>
-<span class="new-price">R$2.50</span>
-</div>
-
-<div class="item rgb">Martino Gravitino 
-<span class="old-price">R$4.00</span>
-<span class="new-price">R$3.50</span>
-</div>
-
-<div class="item rgb">Grappellino D'Oro 
-<span class="old-price">R$4.00</span>
-<span class="new-price">R$3.50</span>
-</div>
-
-<div class="item rgb">Elefante de Morango 
-<span class="old-price">R$5.00</span>
-<span class="new-price">R$4.00</span>
-</div>
-
-<div class="item rgb">Din Din Vaultero 
-<span class="old-price">R$5.00</span>
-<span class="new-price">R$4.00</span>
-</div>
-
-<div class="item rgb">Glacierello Infernetti 
-<span class="old-price">R$5.50</span>
-<span class="new-price">R$4.00</span>
-</div>
-
-<div class="item rgb">Biscotti Macarotti 
-<span class="old-price">R$6.00</span>
-<span class="new-price">R$4.50</span>
-</div>
-
-<div class="item rgb">Galáxia Fantasma 
-<span class="old-price">R$6.00</span>
-<span class="new-price">R$4.50</span>
-</div>
-
-<div class="item rgb">Rubichetto Cubini 
-<span class="old-price">R$6.50</span>
-<span class="new-price">R$5.00</span>
-</div>
-
-<div class="item rgb">Freezeti Cobretti 
-<span class="old-price">R$6.50</span>
-<span class="new-price">R$5.00</span>
-</div>
-
-<div class="item rgb">Cupitron Consoletron 
-<span class="old-price">R$7.00</span>
-<span class="new-price">R$6.00</span>
-</div>
-
-<h2>🔥 Infinity</h2>
-
-<div class="item rgb">anububu</div>
-<div class="item rgb">meta technetta</div>
-<div class="item rgb">Noobini Infeeny</div>
-
-<button class="btn" onclick="openPix()">Pagar com Pix</button>
-
-</div>
-
-<!-- PIX -->
-<div class="full-page" id="pixPage">
-<div class="full-box">
-<h2>Pagamento via Pix</h2>
-<p>Chave Pix: 566992408</p>
-<button class="btn" onclick="closePage('pixPage')">Fechar</button>
-</div>
-</div>
-
-<div class="security-warning">
-⚠️ Nunca pedimos sua senha ou código de verificação.
-</div>
-
-<div class="footer">
-<a href="#" onclick="openPage('termsPage')">Termos</a>
-<a href="#" onclick="openPage('policyPage')">Política de Entrega</a>
-<a href="#" onclick="openPage('refundPage')">Reembolso</a>
-<br><br>
-<a href="https://www.tiktok.com/@lucascpastor" target="_blank">
-TikTok: @lucascpastor
+<div class="tiktok">
+<a href="https://tiktok.com/@lucascpastor" target="_blank">
+⚡ @lucascpastor
 </a>
 </div>
 
-<!-- TERMOS -->
-<div class="full-page" id="termsPage">
-<div class="full-box">
-<h2>Termos de Serviço</h2>
-<p>Ao comprar você concorda com entrega via DM.</p>
-<button class="btn" onclick="closePage('termsPage')">Fechar</button>
-</div>
+<div class="menu">
+    <button onclick="showDivinos()">DIVINOS</button>
+    <button onclick="showInfinity()">INFINITY</button>
+    <button onclick="showTermos()">TERMOS</button>
+    <button onclick="showEntrega()">ENTREGA</button>
 </div>
 
-<!-- POLITICA -->
-<div class="full-page" id="policyPage">
-<div class="full-box">
-<h2>Política de Entrega</h2>
-<p>Entrega realizada após confirmação de pagamento.</p>
-<button class="btn" onclick="closePage('policyPage')">Fechar</button>
-</div>
-</div>
+<input type="text" id="search" placeholder="🔎 Pesquisar item..." onkeyup="searchItems()">
 
-<!-- REEMBOLSO -->
-<div class="full-page" id="refundPage">
-<div class="full-box">
-<h2>Reembolso</h2>
-<p>Não há reembolso após entrega do item.</p>
-<button class="btn" onclick="closePage('refundPage')">Fechar</button>
-</div>
+<div class="section" id="content"></div>
+
+<div id="popup">
+    <div id="popupBox">
+        <h3 id="itemName"></h3>
+        <p id="itemPrice"></p>
+        <p><strong>PIX:</strong> <span id="pixValue">56699240889</span></p>
+        <button onclick="copyPix()" id="copyBtn">COPIAR PIX</button>
+        <br><br>
+        <button onclick="closePopup()">FECHAR</button>
+    </div>
 </div>
 
 <script>
+const pixKey="56699240889";
 
-/* SEARCH */
-function searchItem(){
-let input=document.getElementById("searchInput").value.toLowerCase();
-let items=document.getElementsByClassName("item");
+let sales=localStorage.getItem("salesCount");
+if(!sales){
+    sales=Math.floor(Math.random()*50)+120;
+}
+document.getElementById("salesCount").innerText=sales;
 
-for(let i=0;i<items.length;i++){
-let txt=items[i].innerText.toLowerCase();
-items[i].style.display=txt.includes(input)?"block":"none";
-}
+setInterval(()=>{
+    sales++;
+    localStorage.setItem("salesCount",sales);
+    document.getElementById("salesCount").innerText=sales;
+},150000);
+
+const divinos=[
+{name:"Bulbito Bandito Traktorito", old:"R$3,00", price:"R$2,00"},
+{name:"Burgerini Bearini", old:"R$3,50", price:"R$2,50"},
+{name:"Martino Gravitino", old:"R$4,50", price:"R$3,50"},
+{name:"Grappellino D'Oro", old:"R$4,50", price:"R$3,50"},
+{name:"Elefante de Morango", old:"R$5,00", price:"R$4,00"},
+{name:"Din Din Vaultero", old:"R$5,00", price:"R$4,00"},
+{name:"Glacierello Infernetti", old:"R$5,00", price:"R$4,00"},
+{name:"Biscotti Macarotti", old:"R$5,50", price:"R$4,50"},
+{name:"Galáxia Fantasma", old:"R$5,50", price:"R$4,50"},
+{name:"Rubichetto Cubini", old:"R$6,00", price:"R$5,00"},
+{name:"Freezeti Cobretti", old:"R$6,00", price:"R$5,00"},
+{name:"Cupitron Consoletron", old:"R$7,00", price:"R$6,00"}
+];
+
+const infinity=[
+{name:"anububu", price:"R$15"},
+{name:"meta technetta", price:"R$20"},
+{name:"Noobini Infeeny", price:"R$30"}
+];
+
+let currentItems=[];
+
+function render(items){
+    currentItems=items;
+    let html="";
+    items.forEach(item=>{
+        html+=`
+        <div class="item" onclick="openPopup('${item.name}','${item.price}')">
+            <strong>${item.name}</strong><br>
+            ${item.old?`<span class="old">${item.old}</span>`:""}
+            <span class="new">${item.price}</span>
+        </div>`;
+    });
+    document.getElementById("content").innerHTML=html;
 }
 
-/* STATUS */
-function updateOnline(){
-let online=Math.floor(Math.random()*15)+5;
-document.getElementById("onlineCount").innerText=
-"🟢 "+online+" pessoas online agora";
-}
-let sales=Math.floor(Math.random()*5)+1;
-function updateSales(){
-sales+=Math.random()>0.7?1:0;
-document.getElementById("salesToday").innerText=
-"🔥 "+sales+" compras feitas hoje";
-}
-updateOnline();
-updateSales();
-setInterval(updateOnline,15000);
-setInterval(updateSales,20000);
+function showDivinos(){render(divinos);}
+function showInfinity(){render(infinity);}
 
-/* PAGINAS */
-function openPix(){
-document.getElementById("pixPage").style.display="flex";
-}
-function openPage(id){
-document.getElementById(id).style.display="flex";
-}
-function closePage(id){
-document.getElementById(id).style.display="none";
+function showTermos(){
+document.getElementById("content").innerHTML=`
+<h2>Termos de Serviço</h2>
+<p>Envie comprovante via TikTok @lucascpastor.</p>
+<p>Sem reembolso após entrega.</p>`;
 }
 
+function showEntrega(){
+document.getElementById("content").innerHTML=`
+<h2>Política de Entrega</h2>
+<p>Entrega manual após pagamento.</p>
+<p>Prazo médio: 5 a 30 minutos.</p>`;
+}
+
+function openPopup(name,price){
+document.getElementById("itemName").innerText=name;
+document.getElementById("itemPrice").innerText="Valor: "+price;
+document.getElementById("popup").style.display="flex";
+}
+
+function closePopup(){
+document.getElementById("popup").style.display="none";
+}
+
+function copyPix(){
+const pix=document.getElementById("pixValue").innerText;
+navigator.clipboard.writeText(pix).then(()=>{
+const btn=document.getElementById("copyBtn");
+btn.innerText="PIX COPIADO ✅";
+setTimeout(()=>{btn.innerText="COPIAR PIX";},2000);
+});
+}
+
+function searchItems(){
+let value=document.getElementById("search").value.toLowerCase();
+let filtered=currentItems.filter(item=>item.name.toLowerCase().includes(value));
+render(filtered);
+}
+
+window.onload=function(){showDivinos();}
 </script>
 
 </body>
